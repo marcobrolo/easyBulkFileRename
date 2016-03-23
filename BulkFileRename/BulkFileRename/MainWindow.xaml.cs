@@ -30,27 +30,21 @@ namespace BulkFileRename
     public partial class MainWindow : Window
     {
         private string directoryPath = "D:\\";
-        private filesWrapper _fileWrapper = new filesWrapper();
-        private List<fileName> fileNameOBJList = new List<fileName>();
+        private filesWrapper _fileWrapper = new filesWrapper();     
         private List<FileInfoExtended> fileInfoList = new List<FileInfoExtended>();
-
-        private class fileName
-        {
-            public string originFileName { get; set; }
-            public string newFileName { get; set; }
-
-            public fileName() { }
-            public fileName(String originalNameVal)
-            {
-                originFileName = originalNameVal;
-                newFileName = originalNameVal;
-            }
-        }
-
 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        // DEBUG FUNCTIONALITY TO LOG FILEINFO LIST PROPERTIES
+        private void btnPrintFile_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(FileInfoExtended f in fileInfoList)
+            {
+                Console.WriteLine(f.FileInfo.Name + f.newFileName);
+            }
         }
 
         // OPENS UP DIRECTORY SELECTION BOX AND HANDLES POST EVENTS
@@ -59,43 +53,29 @@ namespace BulkFileRename
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
             System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
+            // ONCE USER HITS OK BTN AND CLOSES THE DIRECTORY SELECTION POPUP
             if (result == System.Windows.Forms.DialogResult.OK)
             {
+
                 Console.WriteLine(dialog.SelectedPath);
                 directoryPath = dialog.SelectedPath.Replace(@"\", @"\\");
                 labelDirectory.Content = dialog.SelectedPath;
+
+                // INITIATE FILEWRAPPER TO PROCESS ALL FILES IN THE SELECTED DIRECTORY
                 _fileWrapper.setDirectory( directoryPath);
-                string[] fileNameList = _fileWrapper.getFilesList();
                 fileInfoList = _fileWrapper.getFilesListExtended();
-               
-
-                foreach (string file in fileNameList)
-                {
-                    this.fileNameOBJList.Add(new fileName(file));
-                }
-                DataGridFileNameList.ItemsSource = fileNameOBJList;
-
+                DataGridFileNameList.ItemsSource = fileInfoList;
             }
         }
 
-       
-
-        // FUNCTION TO GRAB FILES IN CURRENT DIRECTORY
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        // BTN TO EXECUTE THE RENAMING OF THE FILES
+        // OPTIMIZATION IDEA: RIGHT NOW WE WILL GO THROUGH LIST TO SEE WHICH FILES NEED TO BE RENAMED
+        // PERHAPS MAKE A NEW POINTER LIST TO ONLY FILES THAT HAD A CHANGE
+        private void btnExecuteRename_Click(object sender, RoutedEventArgs e)
         {
-            var item = ((FrameworkElement)e.OriginalSource).DataContext as fileName;
-            if (item != null)
-            {
-                //listViewFileList.SelectedItems[0].BeginEdit();
-                Console.WriteLine("Item's Double Click handled!" + item.originFileName);
-                
-            }
+
         }
 
-        private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
 
     }
 }

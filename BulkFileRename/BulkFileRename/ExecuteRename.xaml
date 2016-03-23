@@ -1,0 +1,17 @@
+﻿<Window x:Class="BulkFileRename.ExecuteRename"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ExecuteRename" Height="300" Width="700">
+    <Grid>
+        <ListView HorizontalAlignment="Left" Height="204" Margin="10,10,0,0" VerticalAlignment="Top" Width="672">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btnExecute" Content="Button" HorizontalAlignment="Left" Margin="10,219,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnCancel" Content="Button" HorizontalAlignment="Left" Margin="90,219,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

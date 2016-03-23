@@ -12,11 +12,12 @@
 
         <DataGrid x:Name="DataGridFileNameList" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Height="470" Width="1252" AutoGenerateColumns="False" Grid.RowSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Original File Name" Width="Auto" IsReadOnly="False" Binding="{Binding originFileName}"/>
-                <DataGridTextColumn Header="New File Name" Width="Auto" IsReadOnly="False" Binding="{Binding newFileName}"/>
-                <DataGridTextColumn Header="Picture Taken" Width="Auto" IsReadOnly="False" Binding="{Binding exifDate}"/>
+                <DataGridTextColumn Header="Original File Name" Width="Auto" IsReadOnly="True" Binding="{Binding originFileName}"/>
+                <DataGridTextColumn Header="New File Name" Width="Auto" IsReadOnly="False" Binding="{Binding newFileName, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Picture Taken" Width="Auto" IsReadOnly="True" Binding="{Binding exifDate}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button x:Name="btnPrintFile" Content="Print file names" HorizontalAlignment="Left" Margin="10,406,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76" Click="btnPrintFile_Click"/>
 
     </Grid>
 </Window>

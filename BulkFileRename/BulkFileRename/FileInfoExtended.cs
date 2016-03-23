@@ -12,13 +12,15 @@ namespace BulkFileRename
     {
         public FileInfo FileInfo { get; set; }
         public string exifDate { get; set; } // DECIDED TO LEAVE THIS AS A STRING FOR NOW SINCE ITS EASY TO CONVERT
+        public string originFileName { get; set; }
         public string newFileName { get; set; }
 
         public FileInfoExtended(FileInfo file)
         {
             this.FileInfo = file;
+            this.originFileName = file.Name;
+            this.newFileName = file.Name;
         }
-
 
         public bool Equals(FileInfoExtended other)
         {

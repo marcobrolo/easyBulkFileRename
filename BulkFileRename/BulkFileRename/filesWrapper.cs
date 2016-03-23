@@ -66,8 +66,6 @@ namespace BulkFileRename
                 }
                 fileInfoExtendedList.Add(newFile);
             }
-
-
         }
 
         // GETS EXIF DATA FROM ANY VALID FILE, JPG, WAV, TAR
@@ -92,7 +90,6 @@ namespace BulkFileRename
                     Console.WriteLine(e.ToString());
                 }
             }
-
             return null;
         }
     }
