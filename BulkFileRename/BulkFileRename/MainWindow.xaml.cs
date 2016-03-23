@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace BulkFileRename
 {
@@ -33,7 +32,7 @@ namespace BulkFileRename
         private string directoryPath = "D:\\";
         private filesWrapper _fileWrapper = new filesWrapper();
         private List<fileName> fileNameOBJList = new List<fileName>();
-        
+        private List<FileInfoExtended> fileInfoList = new List<FileInfoExtended>();
 
         private class fileName
         {
@@ -44,6 +43,7 @@ namespace BulkFileRename
             public fileName(String originalNameVal)
             {
                 originFileName = originalNameVal;
+                newFileName = originalNameVal;
             }
         }
 
@@ -66,21 +66,19 @@ namespace BulkFileRename
                 labelDirectory.Content = dialog.SelectedPath;
                 _fileWrapper.setDirectory( directoryPath);
                 string[] fileNameList = _fileWrapper.getFilesList();
+                fileInfoList = _fileWrapper.getFilesListExtended();
+               
+
                 foreach (string file in fileNameList)
                 {
-                    this.listViewFileList.Items.Add(new fileName(file));
                     this.fileNameOBJList.Add(new fileName(file));
-                    
                 }
                 DataGridFileNameList.ItemsSource = fileNameOBJList;
 
             }
         }
 
-        private void listViewFileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
 
         // FUNCTION TO GRAB FILES IN CURRENT DIRECTORY
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
