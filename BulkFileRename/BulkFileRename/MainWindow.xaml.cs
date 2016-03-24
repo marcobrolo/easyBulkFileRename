@@ -63,8 +63,8 @@ namespace BulkFileRename
 
                 // INITIATE FILEWRAPPER TO PROCESS ALL FILES IN THE SELECTED DIRECTORY
                 _fileWrapper.setDirectory( directoryPath);
-                fileInfoList = _fileWrapper.getFilesListExtended();
-                DataGridFileNameList.ItemsSource = fileInfoList;
+                DataGridFileNameList.ItemsSource = _fileWrapper.fileInfoExtendedList;
+                
             }
         }
 
@@ -73,9 +73,30 @@ namespace BulkFileRename
         // PERHAPS MAKE A NEW POINTER LIST TO ONLY FILES THAT HAD A CHANGE
         private void btnExecuteRename_Click(object sender, RoutedEventArgs e)
         {
-
+            // POPUP OUR NEW WINDOW
+            // https://social.msdn.microsoft.com/Forums/vstudio/en-US/bced6b99-c8ce-425e-9b34-967a361cedd2/open-new-wpf-window?forum=wpf
+            var newWindow = new ExecuteRenameWindow(_fileWrapper.getListOfChangedFileNames());
+            newWindow.Show();
+            
         }
 
 
+        // CHECK THE NEW FILE NAME ENTERED BY THE USER TO MAKE SURE ITS NOT EMPTY
+        private void DateGridFileNameList_OnEndEdit(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            //http://stackoverflow.com/questions/7660212/how-can-i-get-a-string-value-from-a-datagrid-cell
+            DependencyObject dep = (DependencyObject)e.EditingElement;
+            var rowView = (FileInfoExtended)e.Row.Item;
+            string txtValue = ((System.Windows.Controls.TextBox)e.EditingElement).Text;
+            if (String.IsNullOrEmpty(txtValue))
+            {
+                string oldFileName = rowView.originFileName;
+
+                System.Windows.Forms.MessageBox.Show("New file name cannot be empty", 
+                                                    "Error", MessageBoxButtons.OK,
+                                                    MessageBoxIcon.Error);
+                ((System.Windows.Controls.TextBox)e.EditingElement).Text = oldFileName;                   
+            }          
+        }
     }
 }

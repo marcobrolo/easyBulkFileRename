@@ -13,14 +13,12 @@ namespace BulkFileRename
     class filesWrapper
     {
         public string _directory {get; private set;}
-        private FileInfo[] fileInfoList;
         private string[] exifExtensions = {".jpg", ".jpeg", ".wav", ".tiff"};
-       // private FileInfoExtended[] fileInfoExtendedList;
-        private List<FileInfoExtended> fileInfoExtendedList = new List<FileInfoExtended>();
+        public List<FileInfoExtended> fileInfoExtendedList { get; set; }
 
         public filesWrapper()
         {
-
+            fileInfoExtendedList = new List<FileInfoExtended>();
         }
 
         // PUBLIC ACCESS TO CHANGE DIRECTORY INWHICH WE ARE LOOKING FOR FILES
@@ -29,21 +27,6 @@ namespace BulkFileRename
             _directory = directoryVal;
             // WHEN WE CHANGE DIRECTORY, UPDATE THE FILE LIST
             processDirectory(directoryVal);
-        }
-
-        // PUBLIC ACCESS TO GET LIST OF FILE NAMES
-        public string[] getFilesList()
-        {
-            // RETURN FILE NAME LIST IN ARRAY OF STRINGS USING LINQ
-            string[] fileNamelist = fileInfoList.Select(name => name.Name).ToArray();
-            return fileNamelist;
-            
-        }
-
-        // PUBLIC ACCESS TO GET FileInfo LIST OF SELECTED DIR
-        public FileInfo[] getFileInfoList()
-        {
-            return fileInfoList;
         }
 
         public List<FileInfoExtended> getFilesListExtended()
@@ -55,7 +38,7 @@ namespace BulkFileRename
         private void processDirectory(string targetDir)
         {
             DirectoryInfo dirInfo = new DirectoryInfo(targetDir);
-            fileInfoList = dirInfo.GetFiles();
+            FileInfo[] fileInfoList = dirInfo.GetFiles();
 
             foreach (FileInfo f in fileInfoList)
             {
@@ -91,6 +74,19 @@ namespace BulkFileRename
                 }
             }
             return null;
+        }
+
+        public List<fileRenameInfo> getListOfChangedFileNames()
+        {
+            List<fileRenameInfo> changeList = new List<fileRenameInfo>();
+            foreach (FileInfoExtended f in fileInfoExtendedList)
+            {
+                if (f.originFileName != f.newFileName)
+                {
+                    changeList.Add(new fileRenameInfo(f.originFileName, f.newFileName));
+                }
+            }
+            return changeList;
         }
     }
 }
