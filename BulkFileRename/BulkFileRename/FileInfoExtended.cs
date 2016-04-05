@@ -8,7 +8,7 @@ using System.IO;
 namespace BulkFileRename
 {   
     // SINCE WE CANNOT INERIHIT SEALED CLASSES, WE WILL TRY TO MAKE A COMPOSITE CLASS
-    class FileInfoExtended : IEquatable<FileInfoExtended>
+    public class FileInfoExtended : IEquatable<FileInfoExtended>
     {
         public FileInfo FileInfo { get; set; }
         public string exifDate { get; set; } // DECIDED TO LEAVE THIS AS A STRING FOR NOW SINCE ITS EASY TO CONVERT
@@ -26,6 +26,13 @@ namespace BulkFileRename
         {
             return (this.FileInfo.Name == other.FileInfo.Name
                  && this.FileInfo.Length == other.FileInfo.Length);
+        }
+
+        // RENAME THE CURRENT FILE
+        public void ReNameFile()
+        {
+            // RENAME LOGIC FOUND AT http://stackoverflow.com/questions/680786/rename-some-files-in-a-folder
+            File.Move(FileInfo.FullName, Path.Combine(FileInfo.DirectoryName, newFileName));
         }
     }
 }

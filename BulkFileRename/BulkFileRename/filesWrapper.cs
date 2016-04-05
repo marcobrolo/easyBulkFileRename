@@ -76,17 +76,18 @@ namespace BulkFileRename
             return null;
         }
 
-        public List<fileRenameInfo> getListOfChangedFileNames()
+        public List<FileInfoExtended> getListOfChangedFileNames()
         {
-            List<fileRenameInfo> changeList = new List<fileRenameInfo>();
+            List<FileInfoExtended> changeList = new List<FileInfoExtended>();
             foreach (FileInfoExtended f in fileInfoExtendedList)
             {
                 if (f.originFileName != f.newFileName)
                 {
-                    changeList.Add(new fileRenameInfo(f.originFileName, f.newFileName));
+                    changeList.Add(f);
                 }
             }
             return changeList;
         }
+
     }
 }

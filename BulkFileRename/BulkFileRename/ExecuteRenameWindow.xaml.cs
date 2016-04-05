@@ -20,9 +20,10 @@ namespace BulkFileRename
     /// </summary>
     public partial class ExecuteRenameWindow : Window
     {
-        public List<fileRenameInfo> _changeList { get; set; }
+        private List<FileInfoExtended> _changeList { get; set; }
+        
 
-        public ExecuteRenameWindow(List<fileRenameInfo> changeListVal)
+        public ExecuteRenameWindow(List<FileInfoExtended> changeListVal)
         {
             this._changeList = changeListVal;
             InitializeComponent();
@@ -36,7 +37,20 @@ namespace BulkFileRename
 
         private void btnExecute_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                foreach (FileInfoExtended f in _changeList)
+                {
+                    f.ReNameFile();
+                }
+            }
+            catch (Exception err)
+            {
+                // LOOK INTO LOGGING LIBRARIES SUCH AS LOG4NET TO WRITE LOGS INTO EXTERNAL FILES
+                Console.WriteLine(err);
+            }
 
+            this.Close();
         }
     }
 }
