@@ -21,6 +21,8 @@ namespace BulkFileRename
     public partial class ExecuteRenameWindow : Window
     {
         private List<FileInfoExtended> _changeList { get; set; }
+        // USED TO LET PARENT KNOW IF USER CANCELLED WINDOW OR PROCEEDED WITH RENAME PROCESS
+        public bool result = false;
         
 
         public ExecuteRenameWindow(List<FileInfoExtended> changeListVal)
@@ -42,6 +44,7 @@ namespace BulkFileRename
                 foreach (FileInfoExtended f in _changeList)
                 {
                     f.ReNameFile();
+                    f.originFileName = f.newFileName;
                 }
             }
             catch (Exception err)
@@ -50,6 +53,7 @@ namespace BulkFileRename
                 Console.WriteLine(err);
             }
 
+            result = true;
             this.Close();
         }
     }

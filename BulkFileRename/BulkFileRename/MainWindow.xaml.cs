@@ -58,21 +58,23 @@ namespace BulkFileRename
             {
 
                 Console.WriteLine(dialog.SelectedPath);
-                directoryPath = dialog.SelectedPath.Replace(@"\", @"\\");
+                this.directoryPath = dialog.SelectedPath.Replace(@"\", @"\\");
                 labelDirectory.Content = dialog.SelectedPath;
 
                 // INITIATE FILEWRAPPER TO PROCESS ALL FILES IN THE SELECTED DIRECTORY
-                _fileWrapper.setDirectory( directoryPath);
-                DataGridFileNameList.ItemsSource = _fileWrapper.fileInfoExtendedList;
+                renderFileListDisplay();
                 
             }
         }
 
+        // SETUP THE DATAGRID VIEW TO SHOW THE FILES LISTED IN THE DIRECTORY
         private void renderFileListDisplay()
         {
             // INITIATE FILEWRAPPER TO PROCESS ALL FILES IN THE SELECTED DIRECTORY
             _fileWrapper.setDirectory(directoryPath);
+            DataGridFileNameList.ItemsSource = null;
             DataGridFileNameList.ItemsSource = _fileWrapper.fileInfoExtendedList;
+           
         }
 
         // BTN TO EXECUTE THE RENAMING OF THE FILES
@@ -83,7 +85,12 @@ namespace BulkFileRename
             // POPUP OUR NEW WINDOW
             // https://social.msdn.microsoft.com/Forums/vstudio/en-US/bced6b99-c8ce-425e-9b34-967a361cedd2/open-new-wpf-window?forum=wpf
             var newWindow = new ExecuteRenameWindow(_fileWrapper.getListOfChangedFileNames());
-            newWindow.Show();    
+            newWindow.ShowDialog();
+            
+            if (newWindow.result == true)
+            {
+                renderFileListDisplay();
+            }
 
         }
 
