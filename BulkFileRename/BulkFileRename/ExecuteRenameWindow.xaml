@@ -8,8 +8,8 @@
         <ListView x:Name="listViewRenameFileInfo" HorizontalAlignment="Left" Height="204" Margin="10,10,0,0" VerticalAlignment="Top" Width="672">
             <ListView.View>
                 <GridView >
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding originFileName}"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding newFileName}"/>
+                    <GridViewColumn Header="Original File Name" DisplayMemberBinding="{Binding originFileName}"/>
+                    <GridViewColumn Header="New File Name" DisplayMemberBinding="{Binding newFileName}"/>
                 </GridView>
             </ListView.View>
         </ListView>

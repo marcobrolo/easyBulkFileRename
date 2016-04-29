@@ -20,6 +20,7 @@
         </DataGrid>
         <Button x:Name="btnPrintFile" Content="Print file names" HorizontalAlignment="Left" Margin="10,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="108" Click="btnPrintFile_Click" Height="30"/>
         <Button x:Name="btnExecuteRename" Content="Rename My files" HorizontalAlignment="Left" Margin="10,393,0,0" Grid.Row="1" VerticalAlignment="Top" Width="108" Click="btnExecuteRename_Click" Height="30"/>
+        <Button x:Name="btnClearNames" Content="Clear New File names" HorizontalAlignment="Left" Margin="10,428,0,0" Grid.Row="1" VerticalAlignment="Top" Width="108" Click="btnClearNewNames_Click" Height="30"/>
 
     </Grid>
 </Window>

@@ -31,7 +31,6 @@ namespace BulkFileRename
     {
         private string directoryPath = "D:\\";
         private filesWrapper _fileWrapper = new filesWrapper();     
-        private List<FileInfoExtended> fileInfoList = new List<FileInfoExtended>();
 
         public MainWindow()
         {
@@ -41,9 +40,13 @@ namespace BulkFileRename
         // DEBUG FUNCTIONALITY TO LOG FILEINFO LIST PROPERTIES
         private void btnPrintFile_Click(object sender, RoutedEventArgs e)
         {
-            foreach(FileInfoExtended f in fileInfoList)
+            
+            if (_fileWrapper != null)
             {
-                Console.WriteLine(f.FileInfo.Name + f.newFileName);
+                foreach (var fileExtension in _fileWrapper.fileInfoExtendedList)
+                {
+                    Console.WriteLine(fileExtension.originFileName + fileExtension.newFileName);
+                }
             }
         }
 
@@ -59,11 +62,23 @@ namespace BulkFileRename
 
                 Console.WriteLine(dialog.SelectedPath);
                 this.directoryPath = dialog.SelectedPath.Replace(@"\", @"\\");
-                labelDirectory.Content = dialog.SelectedPath;
+                this.labelDirectory.Content = dialog.SelectedPath;
 
                 // INITIATE FILEWRAPPER TO PROCESS ALL FILES IN THE SELECTED DIRECTORY
                 renderFileListDisplay();
                 
+            }
+        }
+
+        // Clears all the new file names
+        private void btnClearNewNames_Click(object sender, RoutedEventArgs e)
+        {
+            if (_fileWrapper != null)
+            {
+                foreach (var fileExtension in _fileWrapper.fileInfoExtendedList)
+                {
+                    fileExtension.newFileName = "";
+                }
             }
         }
 
@@ -91,7 +106,6 @@ namespace BulkFileRename
             {
                 renderFileListDisplay();
             }
-
         }
 
 
